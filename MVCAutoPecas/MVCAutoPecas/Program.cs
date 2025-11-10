@@ -1,4 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using MVCAutoPecas.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//conexao banco
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(connectionString));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -24,6 +33,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+// app.MapControllerRoute(
+//     name: "areas",
+//     pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}")
+//     .WithStaticAssets();
 
 
 app.Run();
