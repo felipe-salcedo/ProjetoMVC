@@ -60,30 +60,6 @@ namespace MVCAutoPecas.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("MVCAutoPecas.Models.Fornecedor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Cnpj")
-                        .HasMaxLength(18)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Telefone")
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Fornecedores");
-                });
-
             modelBuilder.Entity("MVCAutoPecas.Models.Pedido", b =>
                 {
                     b.Property<int>("Id")
@@ -148,11 +124,16 @@ namespace MVCAutoPecas.Migrations
                     b.Property<string>("CodigoFabricante")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Descricao")
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Estoque")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("FornecedorId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ImagemUrl")
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -165,8 +146,6 @@ namespace MVCAutoPecas.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
-
-                    b.HasIndex("FornecedorId");
 
                     b.ToTable("Produtos");
                 });
@@ -209,15 +188,7 @@ namespace MVCAutoPecas.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MVCAutoPecas.Models.Fornecedor", "Fornecedor")
-                        .WithMany("Produtos")
-                        .HasForeignKey("FornecedorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Categoria");
-
-                    b.Navigation("Fornecedor");
                 });
 
             modelBuilder.Entity("MVCAutoPecas.Models.Categoria", b =>
@@ -228,11 +199,6 @@ namespace MVCAutoPecas.Migrations
             modelBuilder.Entity("MVCAutoPecas.Models.Cliente", b =>
                 {
                     b.Navigation("Pedidos");
-                });
-
-            modelBuilder.Entity("MVCAutoPecas.Models.Fornecedor", b =>
-                {
-                    b.Navigation("Produtos");
                 });
 
             modelBuilder.Entity("MVCAutoPecas.Models.Pedido", b =>

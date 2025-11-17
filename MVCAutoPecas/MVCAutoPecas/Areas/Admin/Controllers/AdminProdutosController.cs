@@ -10,6 +10,7 @@ using MVCAutoPecas.Models;
 
 namespace MVCAutoPecas.Areas_Admin_Controllers
 {
+    [Area("Admin")]
     public class AdminProdutosController : Controller
     {
         private readonly AppDbContext _context;
@@ -22,7 +23,7 @@ namespace MVCAutoPecas.Areas_Admin_Controllers
         // GET: AdminProdutos
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Produtos.Include(p => p.Categoria).Include(p => p.Fornecedor);
+            var appDbContext = _context.Produtos.Include(p => p.Categoria);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -36,7 +37,6 @@ namespace MVCAutoPecas.Areas_Admin_Controllers
 
             var produto = await _context.Produtos
                 .Include(p => p.Categoria)
-                .Include(p => p.Fornecedor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (produto == null)
             {
@@ -50,7 +50,6 @@ namespace MVCAutoPecas.Areas_Admin_Controllers
         public IActionResult Create()
         {
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome");
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedores, "Id", "Nome");
             return View();
         }
 
@@ -59,7 +58,7 @@ namespace MVCAutoPecas.Areas_Admin_Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Preco,Estoque,CodigoFabricante,CategoriaId,FornecedorId")] Produto produto)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Descricao,ImagemUrl,Preco,Estoque,CodigoFabricante,CategoriaId")] Produto produto)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +67,6 @@ namespace MVCAutoPecas.Areas_Admin_Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", produto.CategoriaId);
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedores, "Id", "Nome", produto.FornecedorId);
             return View(produto);
         }
 
@@ -86,7 +84,6 @@ namespace MVCAutoPecas.Areas_Admin_Controllers
                 return NotFound();
             }
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", produto.CategoriaId);
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedores, "Id", "Nome", produto.FornecedorId);
             return View(produto);
         }
 
@@ -95,7 +92,7 @@ namespace MVCAutoPecas.Areas_Admin_Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Preco,Estoque,CodigoFabricante,CategoriaId,FornecedorId")] Produto produto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descricao,ImagemUrl,Preco,Estoque,CodigoFabricante,CategoriaId")] Produto produto)
         {
             if (id != produto.Id)
             {
@@ -123,7 +120,6 @@ namespace MVCAutoPecas.Areas_Admin_Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", produto.CategoriaId);
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedores, "Id", "Nome", produto.FornecedorId);
             return View(produto);
         }
 
@@ -137,7 +133,6 @@ namespace MVCAutoPecas.Areas_Admin_Controllers
 
             var produto = await _context.Produtos
                 .Include(p => p.Categoria)
-                .Include(p => p.Fornecedor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (produto == null)
             {

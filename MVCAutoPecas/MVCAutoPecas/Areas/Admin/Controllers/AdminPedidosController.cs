@@ -10,6 +10,7 @@ using MVCAutoPecas.Models;
 
 namespace MVCAutoPecas.Areas_Admin_Controllers
 {
+    [Area("Admin")]
     public class AdminPedidosController : Controller
     {
         private readonly AppDbContext _context;

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<MVCAutoPecas.Models.ViewModels.CategoriaComProdutos>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +8,5 @@
     <h1>VIEW INDEX</h1>
     <partial name="_Carousel" />
 </div>
+
+<partial name="_Vitrine" model="Model" />

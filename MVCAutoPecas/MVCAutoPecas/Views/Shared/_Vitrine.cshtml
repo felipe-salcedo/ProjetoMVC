@@ -1,0 +1,33 @@
+@model IEnumerable<MVCAutoPecas.Models.ViewModels.CategoriaComProdutos>
+
+@foreach (var cat in Model)
+{
+    <h3 class="mt-4">@cat.Categoria.Nome</h3>
+    <div class="row mb-4">
+        @if (cat.Produtos == null || !cat.Produtos.Any())
+        {
+            <div class="col-12">
+                <p class="text-muted">Nenhum produto nesta categoria.</p>
+            </div>
+        }
+        else
+        {
+            foreach (var p in cat.Produtos)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100">
+                        <img src="@(string.IsNullOrEmpty(p.ImagemUrl) ? Url.Content("~/Imagens/placeholder.png") : Url.Content($"~/Imagens/{p.ImagemUrl}"))"
+                            class="card-img-top" alt="@p.Nome" />
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@p.Nome</h5>
+                            <p class="card-text text-muted mb-2">R$ @String.Format("{0:N2}", p.Preco)</p>
+                            <p class="card-text">@p.Descricao</p>
+                            <a asp-area="Admin" asp-controller="Produtos" asp-action="Details" asp-route-id="@p.Id"
+                                class="btn btn-sm btn-primary mt-auto">Ver</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
