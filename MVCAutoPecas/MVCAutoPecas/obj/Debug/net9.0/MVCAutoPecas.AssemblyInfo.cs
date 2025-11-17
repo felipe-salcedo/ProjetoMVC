@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MVCAutoPecas")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1deab308e5564953b4bf9c0768f0717989fb8f18")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9f75d26603b6dbff5b77fea912dd4bf21cf259b")]
 [assembly: System.Reflection.AssemblyProductAttribute("MVCAutoPecas")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MVCAutoPecas")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
