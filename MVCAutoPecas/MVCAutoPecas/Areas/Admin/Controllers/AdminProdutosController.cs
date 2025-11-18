@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -58,8 +60,27 @@ namespace MVCAutoPecas.Areas_Admin_Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Descricao,ImagemUrl,Preco,Estoque,CodigoFabricante,CategoriaId")] Produto produto)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Descricao,ImagemUrl,Preco,Estoque,CodigoFabricante,CategoriaId")] Produto produto, IFormFile arquivoFoto)
         {
+            // salvar arquivo se enviado
+            if (arquivoFoto != null && arquivoFoto.Length > 0)
+            {
+                var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Imagens");
+                if (!Directory.Exists(uploads))
+                    Directory.CreateDirectory(uploads);
+
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(arquivoFoto.FileName)}";
+                var filePath = Path.Combine(uploads, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await arquivoFoto.CopyToAsync(stream);
+                }
+
+                // armazenar apenas o nome do arquivo (visto que View usa ~/Imagens/{ImagemUrl})
+                produto.ImagemUrl = fileName;
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(produto);

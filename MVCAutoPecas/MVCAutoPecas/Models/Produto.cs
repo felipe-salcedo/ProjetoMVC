@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,7 +26,7 @@ namespace MVCAutoPecas.Models
         public string? CodigoFabricante { get; set; }
 
         public int CategoriaId { get; set; }
-        public Categoria Categoria { get; set; }
+        public Categoria? Categoria { get; set; }
 
         public ICollection<PedidoItem> PedidoItens { get; set; } = new List<PedidoItem>();
     }
