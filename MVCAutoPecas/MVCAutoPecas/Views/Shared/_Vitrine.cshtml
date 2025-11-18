@@ -22,7 +22,7 @@
                             <h5 class="card-title">@p.Nome</h5>
                             <p class="card-text text-muted mb-2">R$ @String.Format("{0:N2}", p.Preco)</p>
                             <p class="card-text">@p.Descricao</p>
-                            <a asp-area="Admin" asp-controller="Produtos" asp-action="Details" asp-route-id="@p.Id"
+                            <a asp-area="Admin" asp-controller="AdminProdutos" asp-action="Details" asp-route-id="@p.Id"
                                 class="btn btn-sm btn-primary mt-auto">Ver</a>
                         </div>
                     </div>

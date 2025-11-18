@@ -1,12 +1,12 @@
-﻿@model IEnumerable<MVCAutoPecas.Models.ViewModels.CategoriaComProdutos>
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1>VIEW INDEX</h1>
+    <h1>AUTOPEÇAS</h1>
     <partial name="_Carousel" />
 </div>
 
-<partial name="_Vitrine" model="Model" />
+<div class="text-center mt-4">
+    <a class="btn btn-primary" asp-controller="Produtos" asp-action="Index">Ver produtos</a>
+</div>
